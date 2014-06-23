@@ -1,0 +1,63 @@
+---
+title       : MPG vs HP
+subtitle    : 
+author      : Yousif
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+## MPG vs HP
+
+-The application show a graph that has MPG on the Y-Axis and Horse Power on the X-Axis.
+
+-This will help users decide on the range of HP of a car to buy by looking at the MPG
+
+---
+
+## Options
+
+The application allows a user to choose the option of which kind of graph they want to see such as:
+
+-Histogram
+
+-Points
+
+---
+
+## Overall View of the Data
+
+```{r plot, echo=FALSE}
+     autoTrans<-mean(mtcars$mpg[mtcars$am==0])
+     manTrans<-mean(mtcars$mpg[mtcars$am==1]);
+     
+     confid<-t.test(mtcars$mpg ~ factor(mtcars$am))
+     minC<-confid$conf.int[1]
+     maxC<-confid$conf.int[2]
+     
+     model1<-glm(mpg~as.factor(cyl)+as.factor(vs)+as.factor(am)+as.factor(gear)+as.factor(carb)+disp+hp+drat+wt+qsec, 
+                 data=mtcars)
+     model2<-glm(mpg ~ as.factor(cyl)+as.factor(am)+hp+wt,
+                 data=mtcars)
+     layout(matrix(c(1,2,3,4),2,2))
+     
+     pairs(mpg ~ ., data = mtcars)
+     
+    # attach(mtcars)
+#plot(hp, mpg, type=input$typ, xlab="HP", cex=1.2, ylab="MPG", main="MPG v. HP")
+```
+---
+## Acknowledgements
+
+I used the following:
+
+-Shiny Package
+
+-Slidify Package
+
+-mtcars DataFrame
+
+---
